@@ -4,10 +4,10 @@ import {
   NavbarContent,
   NavbarItem,
   Link,
-} from '@nextui-org/react';
-import DropdownAvatar from './DropdownAvatar';
-import SigninModalBtn from './Signin/SigninModalBtn';
-import { getSupabaseServerClient } from '../services/supabase';
+} from "@nextui-org/react";
+import DropdownAvatar from "./DropdownAvatar";
+import SigninModalBtn from "./Signin/SigninModalBtn";
+import { getSupabaseServerClient } from "../services/supabase";
 
 export default async function NavBar() {
   const supabase = await getSupabaseServerClient();
@@ -34,6 +34,11 @@ export default async function NavBar() {
           <NavbarItem isActive>
             <Link className="text-lg" href="/dashboard" color="foreground">
               작업 확인하기
+            </Link>
+          </NavbarItem>
+          <NavbarItem isActive>
+            <Link className="text-lg" href="/dashboard" color="foreground">
+              코드 업로드하기
             </Link>
           </NavbarItem>
           <NavbarItem isActive>
