@@ -1,6 +1,5 @@
 "use client";
 import {
-  Input,
   Button,
   Card,
   CardHeader,
@@ -10,52 +9,36 @@ import {
 } from "@nextui-org/react";
 import { DiffEditor } from "@monaco-editor/react";
 import { useState } from "react";
-import { useInsertSnippet } from "@/app/hooks/snippetHook";
 
 export default function AIDiffEditor({
   original: initialOriginal,
   modified: initialModified,
-  userId,
+  onAccept,
+  onDiscard,
 }: AIDiffEditorProps) {
-  const [showOriginal, setShowOriginal] = useState(false);
   const [original, setOriginal] = useState(initialOriginal);
   const [modified, setModified] = useState(initialModified);
-  const [name, setName] = useState("");
 
-  const { mutate: insertSnippet } = useInsertSnippet();
-
-  const applyChanges = () => {
-    setModified(original);
+  const handleAccept = () => {
+    onAccept(modified);
   };
 
-  const saveSnippet = () => {
-    if (!name) {
-      alert("Please enter a name for the snippet.");
-      return;
-    }
-    insertSnippet({ name, code: modified, userId });
+  const handleDiscard = () => {
+    onDiscard();
   };
 
   return (
     <Card className="flex-1">
       <CardHeader className="flex gap-3">
-        <Input
-          placeholder="Snippet Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <Button onClick={() => setShowOriginal(!showOriginal)}>
-          {showOriginal ? "Hide Original" : "Show Original"}
-        </Button>
-        {showOriginal && <Button onClick={applyChanges}>Apply Changes</Button>}
-        <Button onClick={saveSnippet}>Save Snippet</Button>
+        <Button onClick={handleAccept}>Accept</Button>
+        <Button onClick={handleDiscard}>Discard</Button>
       </CardHeader>
       <Divider />
       <CardBody>
         <DiffEditor
           height="200px"
           language="python"
-          original={showOriginal ? original : ""}
+          original={original}
           modified={modified}
           onMount={(editor, monaco) => {
             editor.getModifiedEditor().onDidChangeModelContent(() => {
@@ -64,7 +47,7 @@ export default function AIDiffEditor({
           }}
           options={{
             enableSplitViewResizing: true,
-            renderSideBySide: showOriginal,
+            renderSideBySide: true,
           }}
         />
       </CardBody>
