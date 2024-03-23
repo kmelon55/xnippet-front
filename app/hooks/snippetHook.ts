@@ -1,10 +1,11 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import {
   fetchUserSnippets,
-  insertSnippet,
-  updateSnippet,
-  deleteSnippet,
+  updatedSnippet,
   fetchSnippetById,
+  getLog,
+  deployAndInsertSnippet,
+  deletedSnippet,
 } from "../services/snippet";
 
 export function useFetchUserSnippets(userId: string) {
@@ -23,20 +24,26 @@ export function useFetchSnippetById(id: string) {
   });
 }
 
-export function useInsertSnippet() {
+export function useDeployAndInsertSnippet() {
   return useMutation({
-    mutationFn: insertSnippet,
+    mutationFn: deployAndInsertSnippet,
   });
 }
 
-export function useUpdateSnippet() {
+export function useUpdatedSnippet() {
   return useMutation({
-    mutationFn: updateSnippet,
+    mutationFn: updatedSnippet,
   });
 }
 
-export function useDeleteSnippet() {
+export function useDeletedSnippet() {
   return useMutation({
-    mutationFn: deleteSnippet,
+    mutationFn: deletedSnippet,
+  });
+}
+
+export function useGetLog() {
+  return useMutation({
+    mutationFn: getLog,
   });
 }

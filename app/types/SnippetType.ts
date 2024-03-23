@@ -1,14 +1,15 @@
 interface SnippetDetails {
   id?: string;
   name: string;
-  code: string;
+  code?: string;
   userId?: string;
 }
 
 interface AIDiffEditorProps {
   original: string;
   modified: string;
-  userId: string;
+  onAccept: (newCode: string) => void;
+  onDiscard: () => void;
 }
 
 interface UserSnippetsProps {
